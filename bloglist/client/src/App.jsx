@@ -13,6 +13,7 @@ import ErrorBoundary from './components/ErrorBoundary'
 import NotFound from './components/NotFound'
 import { useBlogs } from './hooks/useBlogs'
 import UserContext from './context/UserContext'
+import persistentUser from './services/persistentUser'
 
 
 const App = () => {
@@ -22,13 +23,13 @@ const App = () => {
 
 
   useEffect(() => {
-    const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
-    if (loggedUserJSON) {
-      const user = JSON.parse(loggedUserJSON)
+    const user = persistentUser.getUser()
+
+    if (user) {
       setUser(user)
       blogService.setToken(user.token)
     }
-  }, [])
+  }, [setUser])
 
   if (isPending) {
     return <div>loading data...</div>
@@ -42,9 +43,7 @@ const App = () => {
 
     try {
       const user = await loginService.login({ username, password })
-      window.localStorage.setItem(
-        'loggedBlogappUser', JSON.stringify(user)
-      )
+      persistentUser.saveUser(user)
       blogService.setToken(user.token)
       setUser(user)
 
@@ -57,7 +56,7 @@ const App = () => {
     }
   }
   const handleLogout = () => {
-    window.localStorage.removeItem('loggedBlogappUser')
+    persistentUser.saveUser(user)
     blogService.setToken(null)
     setUser(null)
   }

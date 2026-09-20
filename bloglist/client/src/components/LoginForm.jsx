@@ -1,14 +1,14 @@
-import { useState } from 'react'
+import useField from '../hooks/useField'
 import { TextField, Button, Box, Typography } from '@mui/material'
 const LoginForm = ({ onLogin }) => {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+  const username = useField('text')
+  const password = useField('password')
 
   const handleLogin = async event => {
     event.preventDefault()
-    onLogin(username, password)
-    setUsername('')
-    setPassword('')
+    onLogin(username.value, password.value)
+    username.setValue('')
+    password.setValue('')
 
   }
   return (
@@ -18,8 +18,10 @@ const LoginForm = ({ onLogin }) => {
         <div>
           <label >
             username
-            <input type="text"  value={username}
-              onChange={({ target }) => setUsername(target.value)}
+            <input
+              type={username.type}
+              value={username.value}
+              onChange={username.onChange}
             />
           </label>
         </div>
@@ -27,9 +29,9 @@ const LoginForm = ({ onLogin }) => {
           <label>
             password
             <input
-              type="password"
-              value={password}
-              onChange={({ target }) => setPassword(target.value)}
+              type={password.type}
+              value={password.value}
+              onChange={password.onChange}
             />
           </label>
         </div>

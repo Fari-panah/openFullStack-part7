@@ -1,10 +1,11 @@
-import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { TextField, Button } from '@mui/material'
+import { useField } from '../hooks/useField'
+
 const BlogForm = ({ createBlog }) => {
-  const [title, setTitle] = useState('')
-  const [author, setAuthor] = useState('')
-  const [url, setUrl] = useState('')
+  const title = useField('text')
+  const author = useField('text')
+  const url = useField('text')
 
   const navigate = useNavigate()
 
@@ -12,16 +13,16 @@ const BlogForm = ({ createBlog }) => {
     event.preventDefault()
     createBlog(
       {
-        title,
-        author,
-        url
+        title: title.value,
+        author: author.value,
+        url: url.value
       }
 
 
     )
-    setTitle('')
-    setAuthor('')
-    setUrl('')
+    title.setValue('')
+    author.setValue('')
+    url.setValue('')
     navigate('/')
 
   }
@@ -35,8 +36,8 @@ const BlogForm = ({ createBlog }) => {
 
           <TextField
             label="title"
-            value={title}
-            onChange={({ target }) => setTitle(target.value)}
+            value={title.value}
+            onChange={title.onChange}
             style={{ marginTop: 10, width: 500 }}
           />
 
@@ -44,8 +45,8 @@ const BlogForm = ({ createBlog }) => {
         <div>
           <TextField
             label="author"
-            value={author}
-            onChange={({ target }) => setAuthor(target.value)}
+            value={author.value}
+            onChange={author.onChange}
             style={{ marginTop: 10, width: 500 }}
           />
 
@@ -53,8 +54,8 @@ const BlogForm = ({ createBlog }) => {
         <div>
           <TextField
             label="url"
-            value={url}
-            onChange={({ target }) => setUrl(target.value)}
+            value={url.value}
+            onChange={url.onChange}
             style={{ marginTop: 10, width: 500 }}
           />
 
