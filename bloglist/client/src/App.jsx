@@ -10,6 +10,8 @@ import BlogForm from './components/BlogForm'
 import BlogList from './components/BlogList'
 import { Navigate } from 'react-router-dom'
 import ErrorBoundary from './components/ErrorBoundary'
+import NotFound from './components/NotFound'
+
 
 
 const App = () => {
@@ -122,6 +124,7 @@ const App = () => {
           />} />
           <Route path="/login" element={!user ?<LoginForm onLogin={handleLogin} />: <Navigate replace to= "/"/>} /> //Navigate is just redirection cant handle as a button!!!
           <Route path="/new" element={<BlogForm createBlog={addBlog}/>}/>
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </ErrorBoundary>
     </div>
