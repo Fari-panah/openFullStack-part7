@@ -1,14 +1,26 @@
 import { useParams } from 'react-router-dom'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import UserContext from '../context/UserContext'
 
-const Blog = ({ blogs, removeBlog, likeBlog }) => {
+const Blog = ({ blogs, removeBlog, likeBlog, comment }) => {
+  const [newComment, setNewComment] = useState('')
   const { user } = useContext(UserContext)
   //useParams(): helps us find out which note the user requested through the URL
   const id = useParams().id
   const blog = blogs.find(blog => blog.id === id )
   if (!blog) {
     return null
+  }
+
+  const addComment = event => {
+    event.preventDefault()
+
+    comment({
+      id: blog.id,
+      comment: newComment
+    })
+
+    setNewComment('')
   }
 
   const blogStyle = {
@@ -48,7 +60,22 @@ const Blog = ({ blogs, removeBlog, likeBlog }) => {
         remove
         </button>
       )}
+      <h3>comments</h3>
+
+      <form onSubmit={addComment}>
+        <input
+          value={newComment}
+          onChange={event => setNewComment(event.target.value)}
+        />
+        <button type="submit">add comment</button>
+      </form>
+      <ul>
+        {blog.comments?.map((comment, index) => (
+          <li key={index}>{comment}</li>
+        ))}
+      </ul>
     </div>
+
   )
 }
 export default Blog

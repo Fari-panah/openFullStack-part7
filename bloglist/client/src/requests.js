@@ -53,6 +53,22 @@ export const deleteBlog = async (id) => {
   return await response.json()
 }
 
+export const addComment = async (id, comment) => {
+  const response = await fetch(`${baseUrl}/${id}/comments`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ comment })
+  })
+
+  if (!response.ok) {
+    throw new Error('Failed to add comment')
+  }
+
+  return await response.json()
+}
+
 export const getUsers = async () => {
   const response = await fetch(usersUrl)
 

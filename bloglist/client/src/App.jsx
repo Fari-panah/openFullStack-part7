@@ -22,7 +22,7 @@ import User from './components/User'
 const App = () => {
   const { user, setUser } = useContext(UserContext)
   const [message, setMessage] = useState(null)
-  const { blogs, isPending, isError, addBlog, likeBlog, removeBlog } = useBlogs()
+  const { blogs, isPending, isError, addBlog, likeBlog, removeBlog, comment } = useBlogs()
   const { users } = useUsers()
 
 
@@ -87,7 +87,7 @@ const App = () => {
         <Routes>
           <Route path="/users" element={<UserList users={users} />} />
           <Route path='/blogs/:id' element={<Blog likeBlog={likeBlog}
-            removeBlog={removeBlog} blogs={blogs}/>}/>
+            removeBlog={removeBlog} blogs={blogs} comment={comment}/>}/>
           <Route path="/" element={<BlogList blogs={blogs} />} />
           <Route path="/login" element={!user ?<LoginForm onLogin={handleLogin} />: <Navigate replace to= "/"/>} /> //Navigate is just redirection cant handle as a button!!!
           <Route path="/new" element={<BlogForm createBlog={addBlog}/>}/>

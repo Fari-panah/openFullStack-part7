@@ -18,6 +18,21 @@ blogsRouter.get('/:id', async (request, response) => {
   }
 
 })
+//comments:does not use userExtractor, comments are anonymous
+blogsRouter.post('/:id/comments', async (request, response) => {
+  const blog = await Blog.findById(request.params.id)
+
+  if (!blog) {
+    return response.status(404).end()
+  }
+
+  blog.comments = blog.comments.concat(request.body.comment)
+
+  const savedBlog = await blog.save()
+
+  response.json(savedBlog)
+})
+
 
 blogsRouter.post('/', userExtractor, async (request, response) => {
   const user = request.user

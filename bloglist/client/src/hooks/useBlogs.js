@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { getBlogs, createBlog, updateBlog, deleteBlog } from '../requests'
+import { getBlogs, createBlog, updateBlog, deleteBlog, addComment } from '../requests'
 
 export const useBlogs = () => {
   const queryClient = useQueryClient()
@@ -31,6 +31,12 @@ export const useBlogs = () => {
       queryClient.invalidateQueries({ queryKey: ['blogs'] })
     }
   })
+  const commentMutation = useMutation({
+    mutationFn: ({ id, comment }) => addComment(id, comment),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['blogs'] })
+    }
+  })
 
   return {
     blogs: result.data,
@@ -42,7 +48,8 @@ export const useBlogs = () => {
     likeBlog: (blog) => updateBlogMutation.mutate({
       ...blog,
       likes: blog.likes + 1
-    })
+    }),
+    comment: commentMutation.mutate
 
   }
 }
