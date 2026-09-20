@@ -1,4 +1,5 @@
 const baseUrl = 'http://localhost:3003/blogs'
+const usersUrl = 'http://localhost:3003/users'
 
 export const getBlogs = async () => {
   const response = await fetch(baseUrl)
@@ -47,6 +48,16 @@ export const deleteBlog = async (id) => {
 
   if (!response.ok) {
     throw new Error('Failed to delete blog')
+  }
+
+  return await response.json()
+}
+
+export const getUsers = async () => {
+  const response = await fetch(usersUrl)
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch users')
   }
 
   return await response.json()

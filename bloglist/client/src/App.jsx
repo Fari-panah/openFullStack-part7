@@ -14,12 +14,16 @@ import NotFound from './components/NotFound'
 import { useBlogs } from './hooks/useBlogs'
 import UserContext from './context/UserContext'
 import persistentUser from './services/persistentUser'
+import { useUsers } from './hooks/useUsers'
+import UserList from './components/UserList'
+import User from './components/User'
 
 
 const App = () => {
   const { user, setUser } = useContext(UserContext)
   const [message, setMessage] = useState(null)
   const { blogs, isPending, isError, addBlog, likeBlog, removeBlog } = useBlogs()
+  const { users } = useUsers()
 
 
   useEffect(() => {
@@ -81,11 +85,13 @@ const App = () => {
       <ErrorBoundary>
 
         <Routes>
+          <Route path="/users" element={<UserList users={users} />} />
           <Route path='/blogs/:id' element={<Blog likeBlog={likeBlog}
             removeBlog={removeBlog} blogs={blogs}/>}/>
           <Route path="/" element={<BlogList blogs={blogs} />} />
           <Route path="/login" element={!user ?<LoginForm onLogin={handleLogin} />: <Navigate replace to= "/"/>} /> //Navigate is just redirection cant handle as a button!!!
           <Route path="/new" element={<BlogForm createBlog={addBlog}/>}/>
+          <Route path="/users/:id" element={<User users={users} />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </ErrorBoundary>
