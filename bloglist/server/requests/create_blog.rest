@@ -1,0 +1,10 @@
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+
+ {
+  "title": "Learning Full Stack Open",
+  "author": "Farnaz Jamilpanah",
+  "url": "https://fullstackopen.com",
+  "likes": 10,
+  "userId": "6a5a1bee930ed5332b5e2700"
+}
