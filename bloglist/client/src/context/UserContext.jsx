@@ -7,9 +7,9 @@ export default UserContext
 export const  UserContextProvider = (props) => {
   const [user, setUser] = useState(null)
   return(
-    <userContext.provider value={{ user, setUser }}>
+    <UserContext.Provider value={{ user, setUser }}>
       {props.children}
-    </userContext.provider>
+    </UserContext.Provider>
   )
 
 }

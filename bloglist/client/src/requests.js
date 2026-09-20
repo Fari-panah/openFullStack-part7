@@ -1,5 +1,5 @@
-const baseUrl = 'http://localhost:3003/blogs'
-const usersUrl = 'http://localhost:3003/users'
+const baseUrl = '/api/blogs'
+const usersUrl = '/api/users'
 
 export const getBlogs = async () => {
   const response = await fetch(baseUrl)
