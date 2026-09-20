@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { Routes, Route, Link } from 'react-router-dom'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
@@ -12,11 +12,11 @@ import { Navigate } from 'react-router-dom'
 import ErrorBoundary from './components/ErrorBoundary'
 import NotFound from './components/NotFound'
 import { useBlogs } from './hooks/useBlogs'
+import UserContext from './context/UserContext'
 
 
 const App = () => {
-
-  const [user, setUser] = useState(null)
+  const { user, setUser } = useContext(UserContext)
   const [message, setMessage] = useState(null)
   const { blogs, isPending, isError, addBlog, likeBlog, removeBlog } = useBlogs()
 
@@ -83,10 +83,8 @@ const App = () => {
 
         <Routes>
           <Route path='/blogs/:id' element={<Blog likeBlog={likeBlog}
-            removeBlog={removeBlog} user={user} blogs={blogs}/>}/>
-          <Route path="/" element={<BlogList blogs={blogs}
-            user={user}
-          />} />
+            removeBlog={removeBlog} blogs={blogs}/>}/>
+          <Route path="/" element={<BlogList blogs={blogs} />} />
           <Route path="/login" element={!user ?<LoginForm onLogin={handleLogin} />: <Navigate replace to= "/"/>} /> //Navigate is just redirection cant handle as a button!!!
           <Route path="/new" element={<BlogForm createBlog={addBlog}/>}/>
           <Route path="*" element={<NotFound />} />

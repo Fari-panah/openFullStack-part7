@@ -1,5 +1,9 @@
 import { useParams } from 'react-router-dom'
-const Blog = ({ blogs, user, removeBlog, likeBlog }) => {
+import { useContext } from 'react'
+import UserContext from '../context/UserContext'
+
+const Blog = ({ blogs, removeBlog, likeBlog }) => {
+  const { user } = useContext(UserContext)
   //useParams(): helps us find out which note the user requested through the URL
   const id = useParams().id
   const blog = blogs.find(blog => blog.id === id )
