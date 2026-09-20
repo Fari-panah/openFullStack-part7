@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom'
-const Blog = ({ blogs, user, removeBlog, updateBlog }) => {
+const Blog = ({ blogs, user, removeBlog, likeBlog }) => {
   //useParams(): helps us find out which note the user requested through the URL
   const id = useParams().id
   const blog = blogs.find(blog => blog.id === id )
@@ -16,8 +16,7 @@ const Blog = ({ blogs, user, removeBlog, updateBlog }) => {
   }
 
   const addLike = () => {
-    const updated = { ...blog, likes: blog.likes + 1 }
-    updateBlog(updated)
+    likeBlog(blog)
   }
 
   /*const addLike = () => {
