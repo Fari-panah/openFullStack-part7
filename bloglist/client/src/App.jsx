@@ -9,6 +9,7 @@ import LoginForm from './components/LoginForm'
 import BlogForm from './components/BlogForm'
 import BlogList from './components/BlogList'
 import { Navigate } from 'react-router-dom'
+import ErrorBoundary from './components/ErrorBoundary'
 
 
 const App = () => {
@@ -111,15 +112,18 @@ const App = () => {
           <button onClick={handleLogout}>logout</button>
         )}
       </div>
-      <Routes>
-        <Route path='/blogs/:id' element={<Blog  updateBlog={updateBlog}
-          removeBlog={removeBlog} user={user} blogs={blogs}/>}/>
-        <Route path="/" element={<BlogList blogs={blogs}
-          user={user}
-        />} />
-        <Route path="/login" element={!user ?<LoginForm onLogin={handleLogin} />: <Navigate replace to= "/"/>} /> //Navigate is just redirection cant handle as a button!!!
-        <Route path="/new" element={<BlogForm createBlog={addBlog}/>}/>
-      </Routes>
+      <ErrorBoundary>
+
+        <Routes>
+          <Route path='/blogs/:id' element={<Blog  updateBlog={updateBlog}
+            removeBlog={removeBlog} user={user} blogs={blogs}/>}/>
+          <Route path="/" element={<BlogList blogs={blogs}
+            user={user}
+          />} />
+          <Route path="/login" element={!user ?<LoginForm onLogin={handleLogin} />: <Navigate replace to= "/"/>} /> //Navigate is just redirection cant handle as a button!!!
+          <Route path="/new" element={<BlogForm createBlog={addBlog}/>}/>
+        </Routes>
+      </ErrorBoundary>
     </div>
 
   )
